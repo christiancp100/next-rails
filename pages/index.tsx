@@ -1,10 +1,10 @@
-import Link from 'next/link'
+import Layout from '@/components/Layout'
 
-import Layout from '../components/Layout'
 
 const IndexPage = () => (
   <Layout title="Next Rails">
-
+    <div className='w-9/12'>
+    </div>
   </Layout>
 )
 
