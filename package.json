@@ -4,9 +4,14 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "debug": "NODE_OPTIONS='--inspect' next dev",
+    "analyze-build": "ANALYZE=true next build",
+    "lint": "prettier --write . && next lint --fix"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/typography": "^0.5.2",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
@@ -15,6 +20,13 @@
     "@types/node": "^12.12.21",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "eslint": "^8.13.0",
+    "eslint-config-next": "^12.1.5",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-formatjs": "^3.1.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "postcss-preset-env": "^7.4.3",
+    "tailwindcss": "^3.0.24",
     "typescript": "4.0"
   }
 }
