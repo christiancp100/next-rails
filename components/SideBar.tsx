@@ -1,32 +1,43 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import DepartureIcon from '@/components/icons/DepartureIcon';
+import DepartureIcon from '@/icons/DepartureIcon';
 
+import Button from './Button';
 import ArrivalIcon from './icons/ArrivalIcon';
-import CalendarIcon from './icons/CalendarIcon';
 import Input from './Input';
 
-interface SearchInputs {
-
+export interface SearchInputs {
+  from: string;
+  to: string;
+  date: string;
 }
 
 interface SideBarProps {
   className?: string;
+  handleSearch: SubmitHandler<SearchInputs>;
 }
 
-const SideBar = ({ className = "" }: SideBarProps) => {
+const SideBar = ({ className = "", handleSearch }: SideBarProps) => {
+  const [loading, setLoading] = useState(false);
+  const { register, handleSubmit, setValue } = useForm<SearchInputs>();
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<SearchInputs>();
+  const search = async (data: SearchInputs) => {
+    setLoading(true);
+    await handleSearch(data);
+    setLoading(false);
+  }
 
   return (
-    <nav className={`pt-12 px-6 bg-default h-full ${className}`}>
-      <div className='flex flex-col gap-y-6 mb-8'>
-        <Input placeholder='Departure Station' Icon={DepartureIcon} />
-        <Input placeholder='Arrival Station' Icon={ArrivalIcon} />
-        <Input placeholder='Departure Date' type={"datetime-local"} />
-      </div>
-      <button className='px-6 py-2 bg-primary text-default shadow-md rounded-md w-full hover:shadow-lg transition-shadow duration-100  hover:bg-primaryDark active:shadow-xlb'>Search</button>
+    <nav className={`pt-12 px-6 bg-default ${className}`}>
+      <form onSubmit={handleSubmit(search)}>
+        <div className='flex flex-col gap-y-6 mb-8'>
+          <Input setValue={setValue} register={register} name="from" placeholder='Departure Station' Icon={DepartureIcon} />
+          <Input setValue={setValue} register={register} name="to" placeholder='Arrival Station' Icon={ArrivalIcon} />
+          <Input register={register} name="date" placeholder='Departure Date' type={"datetime-local"} />
+        </div>
+        <Button loading={loading} type="submit">Search</Button>
+      </form>
     </nav>
   );
 }

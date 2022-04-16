@@ -1,0 +1,63 @@
+import axios from 'axios'
+import { API_URI } from 'lib/consts';
+
+interface Coordinates {
+  x: string;
+  y: string;
+}
+
+export interface Station {
+  name: string;
+}
+
+interface Location {
+  distance: string;
+  name: string;
+  coordinate: Coordinates;
+}
+
+interface Section {
+  location: Location;
+  platform: string;
+  station: Station;
+}
+
+interface Arrival extends Section {
+  arrival: string;
+}
+
+interface Departure extends Section {
+  departure: string;
+}
+
+interface Journey {
+  operator: string;
+}
+
+export interface ConnectionSection {
+  arrival: Arrival;
+  departure: Departure;
+  journey: Journey;
+}
+
+export interface Connection {
+  sections: ConnectionSection[]
+  duration: string;
+  from: Departure;
+  to: Arrival;
+}
+
+export type ConnectionInput = {
+  from: string;
+  to: string;
+  date: string;
+  time: string;
+}
+
+const getConnections = async (connectionInput: ConnectionInput) => {
+
+  const response = await axios.get(API_URI + "/connections", { params: { ...connectionInput } })
+  return response.data?.connections;
+}
+
+export default getConnections;

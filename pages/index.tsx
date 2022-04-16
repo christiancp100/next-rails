@@ -1,11 +1,64 @@
+import * as _ from 'lodash'
+import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { SubmitHandler } from "react-hook-form";
+
+import getConnections, { Connection, ConnectionInput } from '@/api/connections';
+import ConnectionCard from '@/components/ConnectionCard';
 import Layout from '@/components/Layout'
+import SideBar, { SearchInputs } from '@/components/SideBar';
 
+interface IndexProps {
+  connections: Connection[];
+}
 
-const IndexPage = () => (
-  <Layout title="Next Rails">
-    <div className='w-9/12'>
-    </div>
-  </Layout>
-)
+const IndexPage = ({ connections: incomingConnections }: IndexProps) => {
+  const router = useRouter()
+  const [connections, setConnections] = useState(incomingConnections)
+
+  const handleSearch: SubmitHandler<SearchInputs> = async data => {
+    const { from, to, date, time } = data;
+    const connectionsData = await getConnections({
+      from: from as string,
+      to: to as string,
+      date: date as string,
+      time: time as string
+    });
+    setConnections(connectionsData)
+    router.push({ pathname: "/", query: data }, undefined, { shallow: true })
+  };
+
+  return (
+    <Layout title="Next Rails">
+      <SideBar handleSearch={handleSearch} className='w-3/12 h-full' />
+      <div className={`bg-secondary shadow-md overflow-scroll h-full transition-all duration-500 ${connections.length > 0 ? "w-full  p-2" : "w-0"}`}>
+        {connections.length > 0 && connections.map((connection) => (
+          <ConnectionCard className="mx-auto mb-4" key={connection.from.departure} connection={connection} />
+        ))}
+      </div>
+
+    </Layout>
+  )
+}
+
+export const getServerSideProps: GetServerSideProps<IndexProps | object, ConnectionInput> = async (context) => {
+  const { from, to, date, time } = context.query;
+  let connections = []
+  if (!_.isEmpty(context.query)) {
+    connections = await getConnections({
+      from: from as string,
+      to: to as string,
+      date: date as string,
+      time: time as string
+    });
+  }
+  return {
+    props: {
+      connections
+    },
+  }
+
+}
 
 export default IndexPage
