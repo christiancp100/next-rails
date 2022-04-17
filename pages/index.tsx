@@ -1,4 +1,4 @@
-import * as _ from 'lodash'
+import _ from 'lodash'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -18,12 +18,11 @@ const IndexPage = ({ connections: incomingConnections }: IndexProps) => {
   const [connections, setConnections] = useState(incomingConnections)
 
   const handleSearch: SubmitHandler<SearchInputs> = async data => {
-    const { from, to, date, time } = data;
+    const { from, to, dateTime } = data;
     const connectionsData = await getConnections({
-      from: from as string,
-      to: to as string,
-      date: date as string,
-      time: time as string
+      from,
+      to,
+      dateTime,
     });
     setConnections(connectionsData)
     router.push({ pathname: "/", query: data }, undefined, { shallow: true })
@@ -43,14 +42,13 @@ const IndexPage = ({ connections: incomingConnections }: IndexProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps<IndexProps | object, ConnectionInput> = async (context) => {
-  const { from, to, date, time } = context.query;
+  const { from, to, dateTime } = context.query;
   let connections = []
   if (!_.isEmpty(context.query)) {
     connections = await getConnections({
       from: from as string,
       to: to as string,
-      date: date as string,
-      time: time as string
+      dateTime: dateTime as string,
     });
   }
   return {

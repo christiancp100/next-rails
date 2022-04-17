@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { API_URI } from 'lib/consts';
+import moment from 'moment'
 
 interface Coordinates {
   x: string;
   y: string;
 }
 
-export interface Station {
-  name: string;
-}
+export type Station = string;
+
 
 interface Location {
   distance: string;
@@ -50,13 +50,16 @@ export interface Connection {
 export type ConnectionInput = {
   from: string;
   to: string;
-  date: string;
-  time: string;
+  dateTime: string;
 }
 
 const getConnections = async (connectionInput: ConnectionInput) => {
+  const { from, to } = connectionInput;
+  const dateTime = moment(connectionInput.dateTime)
+  const date = dateTime.format("YYYY-MM-DD");
+  const time = dateTime.format("HH:mm");
 
-  const response = await axios.get(API_URI + "/connections", { params: { ...connectionInput } })
+  const response = await axios.get(API_URI + "/connections", { params: { from, to, date, time } })
   return response.data?.connections;
 }
 
