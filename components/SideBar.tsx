@@ -32,7 +32,7 @@ const SideBar = ({ className = "", handleSearch }: SideBarProps) => {
   }
 
   return (
-    <nav className={`pt-12 px-6 bg-default ${className}`}>
+    <nav className={`py-12 px-6 bg-default ${className}`}>
       <form onSubmit={handleSubmit(search)}>
         <div className='flex flex-col gap-y-6 mb-8'>
           <TextField getSuggestions={getLocations} setValue={setValue} register={register} name="from" placeholder='Departure Station' Icon={DepartureIcon} />
@@ -41,7 +41,6 @@ const SideBar = ({ className = "", handleSearch }: SideBarProps) => {
         </div>
         <Button loading={loading} type="submit">Search</Button>
       </form>
-      <span className='absolute bottom-0 mb-4 text-primary text-sm font-thin'>Christian CP © 2022</span>
     </nav>
   );
 }
