@@ -32,8 +32,8 @@ const IndexPage = ({ connections: incomingConnections }: IndexProps) => {
     <Layout title="Next Rails">
       <SideBar handleSearch={handleSearch} className='w-3/12 h-full' />
       <div className={`bg-secondary shadow-md overflow-scroll h-full transition-all duration-500 ${connections.length > 0 ? "w-full  p-2" : "w-0"}`}>
-        {connections.length > 0 && connections.map((connection) => (
-          <ConnectionCard className="mx-auto mb-4" key={connection.from.departure} connection={connection} />
+        {connections.length > 0 && connections.map((connection, i) => (
+          <ConnectionCard className="mx-auto mb-4" key={i} connection={connection} />
         ))}
       </div>
 

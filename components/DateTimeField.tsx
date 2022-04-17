@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 
@@ -17,8 +18,8 @@ interface DateTimeProps {
   setValue?: UseFormSetValue<SearchInputs>;
   getSuggestions?: (e: string) => Station[];
 }
-
 const DateTimeField = (props: DateTimeProps) => {
+  const { query } = useRouter()
   const {
     register,
     required,
@@ -30,7 +31,7 @@ const DateTimeField = (props: DateTimeProps) => {
     <div className='relative'>
       <div className="relative">
         <input
-          defaultValue={defaultValue}
+          defaultValue={query[name] || defaultValue}
           type="datetime-local"
           {...register(
             name as any,

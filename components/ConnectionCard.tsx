@@ -28,8 +28,8 @@ const ConnectionCard: React.FC<ConnectionProps> = ({ connection, className }) =>
 
         <ul className="space-y-2">
           {
-            connection.sections && connection.sections.map(section => (
-              <li key={section.arrival.arrival}>
+            connection.sections && connection.sections.map((section, i) => (
+              <li key={i}>
                 <Section section={section} />
               </li>
             ))

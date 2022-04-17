@@ -15,10 +15,12 @@ const Layout = ({ children, title = 'Next Rails' }: Props) => (
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
+
     <TopBar />
-    <main className='flex h-full'>
+    <main className='flex h-[calc(100%-5rem)]'>
       {children}
     </main>
+
   </div>
 )
 

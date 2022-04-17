@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -14,7 +15,6 @@ export type SearchInputs = {
   to: string;
   dateTime: string;
 }
-
 
 interface SideBarProps {
   className?: string;
@@ -37,10 +37,11 @@ const SideBar = ({ className = "", handleSearch }: SideBarProps) => {
         <div className='flex flex-col gap-y-6 mb-8'>
           <TextField getSuggestions={getLocations} setValue={setValue} register={register} name="from" placeholder='Departure Station' Icon={DepartureIcon} />
           <TextField getSuggestions={getLocations} setValue={setValue} register={register} name="to" placeholder='Arrival Station' Icon={ArrivalIcon} />
-          <DateTimeField register={register} name="dateTime" />
+          <DateTimeField register={register} name="dateTime" defaultValue={moment().format("YYYY-MM-DD[T]HH:mm")} />
         </div>
         <Button loading={loading} type="submit">Search</Button>
       </form>
+      <span className='absolute bottom-0 mb-4 text-primary text-sm font-thin'>Christian CP © 2022</span>
     </nav>
   );
 }

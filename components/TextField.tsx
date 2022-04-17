@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 
@@ -21,6 +22,7 @@ interface TextFieldProps {
 }
 
 const TextField = (props: TextFieldProps) => {
+  const { query } = useRouter()
   const [suggestions, setSuggestions] = useState<Station[]>();
   const {
     autoComplete = "off",
@@ -72,7 +74,7 @@ const TextField = (props: TextFieldProps) => {
         <input
           type="text"
           autoComplete={autoComplete}
-          defaultValue={defaultValue}
+          defaultValue={query[name] || defaultValue}
           placeholder={placeholder}
           {...register(
             name as any,
