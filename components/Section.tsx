@@ -30,7 +30,7 @@ const Section: React.FC<SectionProps> = ({ section }) => {
         </span>
         <div className="ml-4 flex justify-between font-bold w-full">
           <span>{section.arrival.station.name}</span>
-          <span>{departureTime}</span>
+          <span>{arrivalTime}</span>
         </div>
       </div>
     </div>

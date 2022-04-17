@@ -87,11 +87,11 @@ const TextField = (props: TextFieldProps) => {
       </div>
       <div className="absolute left-0 right-0 flex flex-col bg-secondary rounded-b-md z-50 max-h-40 overflow-auto">
         {
-          suggestions && suggestions.map((suggestion => (
+          suggestions && suggestions.map(((suggestion, i) => (
             <span
               onClick={() => handleSelectionClick(name, suggestion)}
               className='px-4 py-1 rounded-md hover:bg-primary hover:text-default hover:cursor-pointer'
-              key={suggestion}>{suggestion}</span>
+              key={i}>{suggestion}</span>
           )))
         }
       </div>

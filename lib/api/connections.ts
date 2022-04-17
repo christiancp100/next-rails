@@ -7,7 +7,9 @@ interface Coordinates {
   y: string;
 }
 
-export type Station = string;
+export interface Station {
+  name: string;
+}
 
 
 interface Location {
