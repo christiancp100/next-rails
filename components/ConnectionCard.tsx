@@ -1,3 +1,4 @@
+import { formatDuration } from 'lib/utils';
 import moment from 'moment'
 import React from 'react'
 
@@ -22,7 +23,7 @@ const ConnectionCard: React.FC<ConnectionProps> = ({ connection, className }) =>
     <div className={`${className} flex flex-col w-full bg-default shadow-sm rounded-lg p-6`}>
       <div className="flex justify-between font-bold text-md">
         <span>{departureDate} &#8212; {arrivalDate}</span>
-        <span>{connection.duration}</span>
+        <span className='px-2 py-1 bg-primary text-default'>{formatDuration(connection.duration)}</span>
       </div>
       <div className="relative mt-6">
 

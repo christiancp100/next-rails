@@ -58,9 +58,14 @@ const getConnections = async (connectionInput: ConnectionInput) => {
   const dateTime = moment(connectionInput.dateTime)
   const date = dateTime.format("YYYY-MM-DD");
   const time = dateTime.format("HH:mm");
+  try {
+    const response = await axios.get(API_URI + "/connections", { params: { from, to, date, time } })
+    return response.data?.connections;
+  }
+  catch (err) {
+    return [];
+  }
 
-  const response = await axios.get(API_URI + "/connections", { params: { from, to, date, time } })
-  return response.data?.connections;
 }
 
 export default getConnections;
